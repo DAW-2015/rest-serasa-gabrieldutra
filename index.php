@@ -73,8 +73,12 @@ $app->post('/estados', function() {
   // insere o estado
   $novoEstado = json_decode($request->getBody());
   $novoEstado = EstadoDAO::addEstado($novoEstado);
-
-  echo json_encode($novoEstado);
+  
+  if ($novoEstado) {
+    echo "{\"message\": \"Estado adicionado\"}";
+  } else {
+    echo "{\"message\": \"Erro ao adicionar estado\"}";
+  }
 });
 
 $app->put('/estados/:id', function ($id) {
@@ -85,7 +89,11 @@ $app->put('/estados/:id', function ($id) {
   $estado = json_decode($request->getBody());
   $estado = EstadoDAO::updateEstado($estado, $id);
 
-   echo json_encode($estado);
+   if ($estado) {
+    echo "{\"message\": \"Estado alterado\"}";
+  } else {
+    echo "{\"message\": \"Erro ao alterar estado\"}";
+  }
 });
 
 $app->delete('/estados/:id', function($id) {
@@ -121,7 +129,11 @@ $app->post('/cidades', function() {
   $novaCidade = json_decode($request->getBody());
   $novaCidade = CidadeDAO::addCidade($novaCidade);
 
-  echo json_encode($novaCidade);
+  if ($novaCidade) {
+    echo "{\"message\": \"Cidade adicionada\"}";
+  } else {
+    echo "{\"message\": \"Erro ao adicionar cidade\"}";
+  }
 });
 
 $app->put('/cidades/:id', function ($id) {
@@ -132,7 +144,11 @@ $app->put('/cidades/:id', function ($id) {
   $cidade = json_decode($request->getBody());
   $cidade = CidadeDAO::updateCidade($cidade, $id);
 
-   echo json_encode($cidade);
+   if ($cidade) {
+    echo "{\"message\": \"Cidade alterada\"}";
+  } else {
+    echo "{\"message\": \"Erro ao alterar cidade\"}";
+  }
 });
 
 $app->delete('/cidades/:id', function($id) {
