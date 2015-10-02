@@ -43,8 +43,11 @@ class CidadeDAO
     $sql = "UPDATE serasa_cidades SET nome='$cidade->nome',estados_id='$cidade->estados_id' WHERE id='$id'";
     $result  = mysqli_query($connection, $sql);
 
-    $cidadeAtualizada = CidadeDAO::getCidadeById($id);
-    return $cidadeAtualizada;
+    if ($result === FALSE) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
 

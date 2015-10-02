@@ -245,3 +245,252 @@
 	"message": "Cidade excluída" 
 	}
 	```
+
+##Estabelecimentos
+1. `GET /estabelecimentos`
+	* Descrição: Visualizar estabelecimentos;
+	* Retorna: 
+		
+	```
+	[
+  		{
+    	"id": "1",
+    	"nome": "Teste1",
+    	"cidades_id": "1",
+    	"cidade": {
+      		"id": "1",
+      		"nome": "Belo Horizonte",
+      		"estados_id": "1",
+      		"estado": {
+        		"id": "1",
+        		"nome": "Minas Gerais"
+      		}		
+    	  }
+  		},
+  		{
+    	"id": "2",
+    	"nome": "Teste2",
+    	"cidades_id": "2",
+    	"cidade": {
+      		"id": "2",
+      		"nome": "Nova Lima",
+      		"estados_id": "1",
+      		"estado": {
+        		"id": "1",
+        		"nome": "Minas Gerais"
+      		}
+    	  }
+  		}
+	]
+	```		
+2. `GET /estabelecimentos/:id`
+	* Descrição: Visualizar estabelecimento com determinado id;
+	* Parâmetro `:id`: Id do estabelecimento a ser localizado;
+	* Retorna: 
+	
+	```
+	{
+    "id": "1",
+    "nome": "Teste1",
+    "cidades_id": "1",
+    "cidade": {
+      	"id": "1",
+      	"nome": "Belo Horizonte",
+      	"estados_id": "1",
+      	"estado": {
+        	"id": "1",
+        	"nome": "Minas Gerais"
+      	}		
+      }
+  	}
+	```
+3. `POST /estabelecimentos`
+	* Descrição: Insere um novo estabelecimento;
+	* Exemplo de corpo: 
+	
+	```
+	{
+    "id": "0",
+    "nome": "Novo Estabelecimento",
+    "cidades_id": "1",
+    "cidade": {
+      	"id": "1",
+      	"nome": "Belo Horizonte",
+      	"estados_id": "1",
+      	"estado": {
+        	"id": "1",
+        	"nome": "Minas Gerais"
+      	}		
+      }
+  	}
+	```
+	* Retorno: 
+	
+	```
+	{
+  	"message": "Estabelecimento adicionado"
+	}
+	```
+4. `PUT /estabelecimentos/:id`
+	* Descrição: Altera um estabelecimento;
+	* Parâmetro `:id`: Id do estabelecimento a ser alterado;
+	* Exemplo de corpo: 
+	
+	```
+	{
+    "id": "0",
+    "nome": "Novo Nome",
+    "cidades_id": "1",
+    "cidade": {
+      	"id": "1",
+      	"nome": "Belo Horizonte",
+      	"estados_id": "1",
+      	"estado": {
+        	"id": "1",
+        	"nome": "Minas Gerais"
+      	}		
+      }
+  	}
+	```
+	* Retorno: 
+
+	```
+	{
+  	"message": "Estabelecimento alterado"
+	}
+	```			
+5. `DELETE /estabelecimentos/:id`
+	* Descrição: Deleta um estabelecimento;
+	* Parâmetro `:id`: Id do estabelecimento a ser deletado;
+	* Retorno: 
+	
+	```
+	{
+	"message": "Estabelecimento excluído" 
+	}
+	```
+	
+##Dívidas
+1. `GET /dividas`
+	* Descrição: Visualizar dividas;
+	* Retorna: 
+		
+	```
+	[
+  		{
+    	"clientes_id": "1",
+    	"estabelecimentos_id": "2",
+    	"valor": "0.00",
+    	"cliente": {
+     		"id": "1",
+      		"cpf": "12345678910",
+      		"nome": "Teste da Silva",
+      		"cidades_id": "1",
+      		"cidade": {
+        		"id": "1",
+        		"nome": "Belo Horizonte",
+        		"estados_id": "1"
+      		}
+    	},
+    	"estabelecimento": {
+      	"id": "2",
+      	"nome": "Teste20",
+      	"cidades_id": "1",
+      	"cidade": {
+        	"id": "1",
+        	"nome": "Belo Horizonte",
+        	"estados_id": "1",
+        		"estado": {
+          		"id": "1",
+          		"nome": "Minas Gerais"
+        		}
+      	  	}	
+    	  }
+  		}
+  	]
+	```		
+2. `GET /dividas/:cid/:eid`
+	* Descrição: Visualizar dívida com determinado id;
+	* Parâmetro `:cid`: Id do cliente;
+	* Parâmetro `:eid`: Id do estabelecimento;
+	* Retorna: 
+	
+	```
+	{
+    "clientes_id": "1",
+    "estabelecimentos_id": "2",
+    "valor": "0.00",
+    "cliente": {
+     	"id": "1",
+      	"cpf": "12345678910",
+      	"nome": "Teste da Silva",
+      	"cidades_id": "1",
+      	"cidade": {
+        	"id": "1",
+        	"nome": "Belo Horizonte",
+        	"estados_id": "1"
+      	}
+    },
+    "estabelecimento": {
+     "id": "2",
+     "nome": "Teste20",
+     "cidades_id": "1",
+     "cidade": {
+     	"id": "1",
+       	"nome": "Belo Horizonte",
+        "estados_id": "1",
+        "estado": {
+          "id": "1",
+          "nome": "Minas Gerais"
+         }
+      }	
+     }
+  	}
+	```
+3. `POST /dividas`
+	* Descrição: Insere uma nova dívida;
+	* Exemplo de corpo: 
+	
+	```
+	{
+    "clientes_id": "1",
+    "estabelecimentos_id": "2",
+    "valor": "20.00"
+    }
+	```
+	* Retorno: 
+	
+	```
+	{
+  	"message": "Dívida adicionada"
+	}
+	```
+4. `PUT /dividas/:cid/:eid`
+	* Descrição: Altera uma dívida;
+	* Parâmetro `:cid`: Id do cliente;
+	* Parâmetro `:eid`: Id do estabelecimento;
+	* Exemplo de corpo: 
+	
+	```
+	{
+    "valor": "25.00"
+    }
+	```
+	* Retorno: 
+
+	```
+	{
+  	"message": "Dívida alterada"
+	}
+	```			
+5. `DELETE /dividas/:cid/:eid`
+	* Descrição: Deleta uma dívida;
+	* Parâmetro `:cid`: Id do cliente;
+	* Parâmetro `:eid`: Id do estabelecimento;
+	* Retorno: 
+	
+	```
+	{
+	"message": "Dívida excluída" 
+	}
+	```

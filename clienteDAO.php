@@ -16,6 +16,20 @@ class ClienteDAO
 
     return $cliente;
   }
+  
+  public static function getClienteById($id) {
+    $connection = Connection::getConnection();
+    $sql = "SELECT * FROM serasa_clientes WHERE id=$id";
+    $result  = mysqli_query($connection, $sql);
+    $cliente = mysqli_fetch_object($result);
+
+    //recupera cidade do cliente
+    $sql = "SELECT * FROM serasa_cidades WHERE id=$cliente->cidades_id";
+    $result = mysqli_query($connection, $sql);
+    $cliente->cidade = mysqli_fetch_object($result);
+
+    return $cliente;
+  }
 
 
   public static function getAll()

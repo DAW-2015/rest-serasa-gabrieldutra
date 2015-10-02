@@ -4,6 +4,9 @@ require 'Slim/Slim.php';
 require 'connection.php';
 require 'clienteDAO.php';
 require 'estadoDAO.php';
+require 'cidadeDAO.php';
+require 'estabelecimentoDAO.php';
+require 'dividaDAO.php';
 
 $app = new \Slim\Slim();
 $app->response()->header('Content-Type', 'application/json;charset=utf-8');
@@ -157,11 +160,121 @@ $app->delete('/cidades/:id', function($id) {
 
   // verifica se houve problema na exclusão
   if ($isDeleted) {
-    echo "{\"message\": \"Cidade excluído\"}";
+    echo "{\"message\": \"Cidade excluída\"}";
   } else {
     echo "{\"message\": \"Erro ao excluir cidade\"}";
   }
 });
 
+// Estabelecimentos
+$app->get('/estabelecimentos/:id', function ($id) {
+  //recupera o estado
+  $estabelecimento = EstabelecimentoDAO::getEstabelecimentoById($id);
+  echo json_encode($estabelecimento);
+});
+
+
+$app->get('/estabelecimentos', function() {
+  // recupera todos os clientes
+  $estabelecimentos = EstabelecimentoDAO::getAll();
+  echo json_encode($estabelecimentos);
+});
+
+$app->post('/estabelecimentos', function() {
+  // recupera o request
+  $request = \Slim\Slim::getInstance()->request();
+
+  // insere o estado
+  $novoEstabelecimento = json_decode($request->getBody());
+  $novoEstabelecimento = EstabelecimentoDAO::addEstabelecimento($novoEstabelecimento);
+
+  if ($novoEstabelecimento) {
+    echo "{\"message\": \"Estabelecimento adicionado\"}";
+  } else {
+    echo "{\"message\": \"Erro ao adicionar estabelecimento\"}";
+  }
+});
+
+$app->put('/estabelecimentos/:id', function ($id) {
+  // recupera o request
+  $request = \Slim\Slim::getInstance()->request();
+
+  // atualiza o cliente
+  $estabelecimento = json_decode($request->getBody());
+  $estabelecimento = EstabelecimentoDAO::updateEstabelecimento($estabelecimento, $id);
+
+   if ($estabelecimento) {
+    echo "{\"message\": \"Estabelecimento alterado\"}";
+  } else {
+    echo "{\"message\": \"Erro ao alterar estabelecimento\"}";
+  }
+});
+
+$app->delete('/estabelecimentos/:id', function($id) {
+  // exclui o cliente
+  $isDeleted = EstabelecimentoDAO::deleteEstabelecimento($id);
+
+  // verifica se houve problema na exclusão
+  if ($isDeleted) {
+    echo "{\"message\": \"Estabelecimento excluído\"}";
+  } else {
+    echo "{\"message\": \"Erro ao excluir estabelecimento\"}";
+  }
+});
+
+// Dividas
+
+$app->get('/dividas/:cid/:eid', function ($cid,$eid) {
+  $divida = DividaDAO::getDividaByIds($cid,$eid);
+  echo json_encode($divida);
+});
+
+
+$app->get('/dividas', function() {
+  $dividas = DividaDAO::getAll();
+  echo json_encode($dividas);
+});
+
+$app->post('/dividas', function() {
+  // recupera o request
+  $request = \Slim\Slim::getInstance()->request();
+
+  // insere o estado
+  $novaDivida = json_decode($request->getBody());
+  $novaDivida = DividaDAO::addDivida($novaDivida);
+
+  if ($novaDivida) {
+    echo "{\"message\": \"Dívida adicionada\"}";
+  } else {
+    echo "{\"message\": \"Erro ao adicionar dívida\"}";
+  }
+});
+
+$app->put('/dividas/:cid/:eid', function ($cid,$eid) {
+  // recupera o request
+  $request = \Slim\Slim::getInstance()->request();
+
+  // atualiza o cliente
+  $divida = json_decode($request->getBody());
+  $divida = DividaDAO::updateDivida($divida, $cid,$eid);
+
+   if ($divida) {
+    echo "{\"message\": \"Dívida alterada\"}";
+  } else {
+    echo "{\"message\": \"Erro ao alterar dívida\"}";
+  }
+});
+
+$app->delete('/dividas/:cid/:eid', function($cid,$eid) {
+  // exclui o cliente
+  $isDeleted = DividaDAO::deleteDivida($cid,$eid);
+
+  // verifica se houve problema na exclusão
+  if ($isDeleted) {
+    echo "{\"message\": \"Dívida excluída\"}";
+  } else {
+    echo "{\"message\": \"Erro ao excluir dívida\"}";
+  }
+});
 
 $app->run();
